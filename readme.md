@@ -36,7 +36,7 @@ Two roles and the playbook were written
 
 **mysql** role is started only in dbserver VM. This role installs and configurates mysql server for Wordpress
 
-I didn't write a role for installing apache. I wrote a playbook /**playboks/wordpress.yml** and imported it to the main playbook **site.yml**. because it is permitted.
+I didn't write a role for installing Apache, PHP and Wordpress. I wrote a playbook /**playboks/wordpress.yml** and imported it to the main playbook **site.yml**. because it is permitted.
 
 ## P.S.
 
