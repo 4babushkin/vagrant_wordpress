@@ -1,0 +1,50 @@
+---
+
+  - name: Set MySQL root password before installing
+    debconf: name='mysql-server' question='mysql-server/root_password' value='{{ mysql_root_pass | quote }}' vtype='password'
+
+  - name: Set the confirm MySQL root password before installing
+    debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{ mysql_root_pass | quote }}' vtype='password'
+
+  - name: install mysql-server python-pymysql
+    apt:
+      name:
+        - mysql-server
+        - libmysqlclient-dev
+        - python3-pymysql
+      state: present
+
+  # - name:  Set MySQL root password
+  # # If .my.cnf already exists, this will cause an mysql-root-password update.
+  #   mysql_user:
+  #     name: root
+  #     password: "{{ mysql_root_pass}}"
+  #     check_implicit_admin: true
+
+  - name: Create database for WordPress
+    mysql_db:
+      name: "{{ mysql_db_name }}"
+      login_user: 'root'
+      login_password: "{{ mysql_root_pass }}"
+      state: present
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: create  mysql user and set password for WordPress
+    mysql_user:
+      login_user: 'root'
+      login_password: "{{ mysql_root_pass }}"
+      name: "{{ mysql_db_user }}"
+      host: "{{ http_host }}"
+      password: "{{ mysql_db_pass }}"
+      priv: '{{ mysql_db_name }}.*:ALL,GRANT'
+      state: present
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: bind mysql remote address
+    ini_file:
+      dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+      section: mysqld
+      option: bind-address
+      value: 0.0.0.0
+    notify:
+    - Restart MySQL

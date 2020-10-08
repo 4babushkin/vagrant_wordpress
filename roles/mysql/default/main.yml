@@ -1,0 +1,5 @@
+#MySQL
+mysql_db_name: wordpess
+mysql_db_user: wordpess
+mysql_db_pass: wordpress_pass
+mysql_root_pass: root_pass

@@ -1,0 +1,24 @@
+---
+    #System Settings
+    php_modules: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
+    #MySQL
+    mysql_db_name: wordpess
+    mysql_db_user: wordpess
+    mysql_db_pass: wordpress_pass
+    mysql_root_pass: root_pass
+
+    #HTTP
+    http_host: "10.10.10.20"
+    http_conf: "10.10.10.20.conf"
+    http_port: "80"
+    db_host: "10.10.10.10"
+
+    #LDAP
+    AuthLDAPURL: "ldap://ldap.forumsys.com:389/dc=example,dc=com?uid?sub"
+    AuthLDAPBindDN: "cn=read-only-admin,dc=example,dc=com"
+    AuthLDAPBindPassword: password
+    
+
+    
+
+
